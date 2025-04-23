@@ -1,8 +1,7 @@
 import pytest
 from main import BooksCollector
 from conftest import fantasy_book, horror_book, detective_book, child_book, comedy_book, long_name
-# класс TestBooksCollector объединяет набор тестов, которыми мы покрываем наше приложение BooksCollector
-# обязательно указывать префикс Test
+
 class TestBooksCollector:
 
     def test_add_new_book_add_two_books(self):

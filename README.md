@@ -1,32 +1,66 @@
 # Тестирование класса BooksCollector
 
-Проект содержит набор автотестов для проверки функциональности класса `BooksCollector`, который управляет коллекцией книг.
+Проект содержит автотесты для проверки работы класса `BooksCollector`, который управляет коллекцией книг.
 
-## Реализованные тесты
 
-### 1. Тесты добавления книг
+## Структура проекта
 
-- `test_add_new_book_add_two_books` - проверяет добавление двух книг в коллекцию
-- `test_add_one_book_successfully` - проверяет добавление одной книги
-- `test_add_book_with_invalid_name` - проверяет обработку невалидных названий:
-  - Пустая строка
-  - Название длиннее 40 символов
-- `test_add_duplicate_book` - проверяет, что нельзя добавить книгу дважды 
+1. **`main.py`**  
+  Класс `BooksCollector`
 
-### 2. Тесты работы с жанрами
+2. **`conftest.py`**  
+   Фикстурами с тестовыми данными
 
-- `test_set_book_genre_valid` - проверяет установку валидного жанра
-- `test_set_book_genre_invalid` - проверяет попытку установки несуществующего жанра
-- `test_get_book_genre` - проверяет получение жанра книги
-- `test_get_books_with_specific_genre` - проверяет фильтрацию по жанру
+3. **`tests.py`**  
+   Автотестов
 
-### 3. Тесты для детских книг
+4. **`README.md`**  
+   Описание проекта
 
-- `test_get_books_for_children` - проверяет, что возвращаются только книги без возрастных ограничений
-- Параметризованный тест `test_children_books_filter` проверяет для каждого жанра:
-  ```python
-  @pytest.mark.parametrize('book, expected', [
-      (fantasy_book, True),
-      (horror_book, False),
-      # ... другие книги
-  ])
+
+## Список тестов
+
+### 1. Метод `add_new_book()`
+- **Тест**: `test_add_new_book_add_two_books`  
+  **Проверяет**: Корректность добавления двух книг в коллекцию
+
+- **Тест**: `test_add_new_book_with_long_name`  
+  **Проверяет**: Обработку названий длиннее 40 символов
+
+- **Тест**: `test_add_new_book_add_similar_books`  
+  **Проверяет**: Защиту от дублирования книг
+
+### 2. Метод `set_book_genre()`
+- **Тест**: `test_set_book_genre_get_genre_successfully`  
+  **Проверяет**: Установку и получение жанра для книги
+
+### 3. Метод `get_books_with_specific_genre()`
+- **Тест**: `test_get_books_with_specific_genre_one_book_get_list_genre`  
+  **Проверяет**: Фильтрацию книг по конкретному жанру
+
+### 4. Метод `get_books_for_children()`
+- **Тест**: `test_get_books_for_children_three_books_get_list_book`  
+  **Проверяет**: Исключение книг с возрастными ограничениями
+
+- **Тест**: `test_get_books_for_children_adult_books_not_included_the_list`  
+  **Проверяет**: Критерии отбора детских книг через параметризацию
+
+### 5. Метод `add_book_in_favorites()`
+- **Тест**: `test_add_book_in_favorites_add_one_books_successfully`  
+  **Проверяет**: Добавление одной книги в избранное
+
+- **Тест**: `test_add_book_in_favorites_same_books`  
+  **Проверяет**: Защиту от дублирования в избранном
+
+### 6. Метод `delete_book_from_favorites()`
+- **Тест**: `test_delete_book_from_favorites_removes_book_successfully`  
+  **Проверяет**: Корректность удаления книги из избранного
+
+### 7. Метод `get_list_of_favorites_books()`
+- **Тест**: `test_add_to_favorites_unlisted_books`  
+  **Проверяет**: Невозможность добавления несуществующих книг
+
+
+## Запуск тестов
+```bash
+pytest -v tests.py

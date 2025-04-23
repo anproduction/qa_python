@@ -16,11 +16,11 @@ def collector():
 @pytest.fixture
 def collector_with_books(collector):
     books = {
-        fantasy_book: 'Фэнтези',
+        fantasy_book: 'Фантастика',
         horror_book: 'Ужасы',
         detective_book: 'Детективы',
-        child_book: 'Детям',
-        comedy_book: 'Юмор'
+        child_book: 'Мультфильмы',
+        comedy_book: 'Комедии'
     }
     for book, genre in books.items():
         collector.add_new_book(book)
