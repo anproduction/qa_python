@@ -7,7 +7,7 @@ horror_book = 'Оно'
 detective_book = 'Убийство в Восточном экспрессе'
 child_book = 'Малыш и Карлсон'
 comedy_book = 'Трое в лодке'
-long_name = 'Очень длинное название книги, которое явно превышает лимит в сорок символов'
+long_name = 'Очень очень очень длинное название книги, которое превышает лимит в сорок символов'
 
 @pytest.fixture
 def collector():
@@ -16,7 +16,7 @@ def collector():
 @pytest.fixture
 def collector_with_books(collector):
     books = {
-        fantasy_book: 'Фантастика',
+        fantasy_book: 'Фэнтези',
         horror_book: 'Ужасы',
         detective_book: 'Детективы',
         child_book: 'Детям',
