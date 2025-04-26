@@ -1,6 +1,6 @@
 import pytest
 from main import BooksCollector
-from conftest import fantasy_book, horror_book, detective_book, child_book, comedy_book, long_name
+from test_data import fantasy_book, horror_book, detective_book, child_book, comedy_book, long_name, books_genres
 
 class TestBooksCollector:
 
@@ -78,3 +78,18 @@ class TestBooksCollector:
         collector_with_books.add_book_in_favorites(fantasy_book)
         collector_with_books.delete_book_from_favorites(fantasy_book)
         assert fantasy_book not in collector_with_books.get_list_of_favorites_books()
+
+    def test_get_favorites_returns_added_books(self, collector_with_books):
+        collector_with_books.add_book_in_favorites(fantasy_book)
+        collector_with_books.add_book_in_favorites(child_book)
+        assert set(collector_with_books.get_list_of_favorites_books()) == {fantasy_book, child_book}
+
+    def test_get_book_genre_returns_correct_genre(self, collector_with_books):
+        assert collector_with_books.get_book_genre(horror_book) == 'Ужасы'
+        assert collector_with_books.get_book_genre(comedy_book) == 'Комедии'
+
+    def test_get_books_genre_returns_all_books(self, collector_with_books):
+        books_genre = collector_with_books.get_books_genre()
+        assert len(books_genre) == len(books_genres)
+        assert books_genre[child_book] == 'Мультфильмы'
+        assert books_genre[detective_book] == 'Детективы'
