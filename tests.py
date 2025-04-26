@@ -33,20 +33,20 @@ class TestBooksCollector:
         assert collector.get_book_genre(fantasy_book) == ''
 
     # Тесты работы с жанрами
-    def test_set_valid_genre(self, collector_with_books):
-        assert collector_with_books.get_book_genre(fantasy_book) == 'Фантастика'
+    def test_set_valid_genre(self, genre_collector):
+        assert genre_collector.get_book_genre(fantasy_book) == 'Фантастика'
 
     def test_set_invalid_genre(self, collector):
         collector.add_new_book(fantasy_book)
         collector.set_book_genre(fantasy_book, 'Роман')
         assert collector.get_book_genre(fantasy_book) == ''
 
-    def test_get_books_by_genre(self, collector_with_books):
-        assert collector_with_books.get_books_with_specific_genre('Ужасы') == [horror_book]
+    def test_get_books_by_genre(self, genre_collector):
+        assert genre_collector.get_books_with_specific_genre('Ужасы') == [horror_book]
 
     # Тесты детских книг
-    def test_get_children_books(self, collector_with_books):
-        children_books = collector_with_books.get_books_for_children()
+    def test_get_children_books(self, genre_collector):
+        children_books = genre_collector.get_books_for_children()
         assert child_book in children_books
         assert horror_book not in children_books
 
@@ -57,39 +57,39 @@ class TestBooksCollector:
         (child_book, True),
         (comedy_book, True)
     ])
-    def test_children_books_filter(self, collector_with_books, book, expected):
-        assert (book in collector_with_books.get_books_for_children()) == expected
+    def test_children_books_filter(self, genre_collector, book, expected):
+        assert (book in genre_collector.get_books_for_children()) == expected
 
     # Тесты избранного
-    def test_add_to_favorites(self, collector_with_books):
-        collector_with_books.add_book_in_favorites(fantasy_book)
-        assert fantasy_book in collector_with_books.get_list_of_favorites_books()
+    def test_add_to_favorites(self, genre_collector):
+        genre_collector.add_book_in_favorites(fantasy_book)
+        assert fantasy_book in genre_collector.get_list_of_favorites_books()
 
-    def test_add_duplicate_to_favorites(self, collector_with_books):
-        collector_with_books.add_book_in_favorites(fantasy_book)
-        collector_with_books.add_book_in_favorites(fantasy_book)
-        assert len(collector_with_books.get_list_of_favorites_books()) == 1
+    def test_add_duplicate_to_favorites(self, genre_collector):
+        genre_collector.add_book_in_favorites(fantasy_book)
+        genre_collector.add_book_in_favorites(fantasy_book)
+        assert len(genre_collector.get_list_of_favorites_books()) == 1
 
     def test_add_unlisted_to_favorites(self, collector):
         collector.add_book_in_favorites('Несуществующая книга')
         assert len(collector.get_list_of_favorites_books()) == 0
 
-    def test_remove_from_favorites(self, collector_with_books):
-        collector_with_books.add_book_in_favorites(fantasy_book)
-        collector_with_books.delete_book_from_favorites(fantasy_book)
-        assert fantasy_book not in collector_with_books.get_list_of_favorites_books()
+    def test_remove_from_favorites(self, genre_collector):
+        genre_collector.add_book_in_favorites(fantasy_book)
+        genre_collector.delete_book_from_favorites(fantasy_book)
+        assert fantasy_book not in genre_collector.get_list_of_favorites_books()
 
-    def test_get_favorites_returns_added_books(self, collector_with_books):
-        collector_with_books.add_book_in_favorites(fantasy_book)
-        collector_with_books.add_book_in_favorites(child_book)
-        assert set(collector_with_books.get_list_of_favorites_books()) == {fantasy_book, child_book}
+    def test_get_favorites_returns_added_books(self, genre_collector):
+        genre_collector.add_book_in_favorites(fantasy_book)
+        genre_collector.add_book_in_favorites(child_book)
+        assert set(genre_collector.get_list_of_favorites_books()) == {fantasy_book, child_book}
 
-    def test_get_book_genre_returns_correct_genre(self, collector_with_books):
-        assert collector_with_books.get_book_genre(horror_book) == 'Ужасы'
-        assert collector_with_books.get_book_genre(comedy_book) == 'Комедии'
+    def test_get_book_genre_returns_correct_genre(self, genre_collector):
+        assert genre_collector.get_book_genre(horror_book) == 'Ужасы'
+        assert genre_collector.get_book_genre(comedy_book) == 'Комедии'
 
-    def test_get_books_genre_returns_all_books(self, collector_with_books):
-        books_genre = collector_with_books.get_books_genre()
+    def test_get_books_genre_returns_all_books(self, genre_collector):
+        books_genre = genre_collector.get_books_genre()
         assert len(books_genre) == len(books_genres)
         assert books_genre[child_book] == 'Мультфильмы'
         assert books_genre[detective_book] == 'Детективы'
