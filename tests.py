@@ -84,9 +84,12 @@ class TestBooksCollector:
         genre_collector.add_book_in_favorites(child_book)
         assert set(genre_collector.get_list_of_favorites_books()) == {fantasy_book, child_book}
 
-    def test_get_book_genre_returns_correct_genre(self, genre_collector):
-        assert genre_collector.get_book_genre(horror_book) == 'Ужасы'
-        assert genre_collector.get_book_genre(comedy_book) == 'Комедии'
+    def test_get_book_genre_returns_correct_genre(self):
+        collector = BooksCollector()
+        test_book = 'Книга без жанра'
+        collector.add_new_book(test_book)
+        assert collector.get_book_genre(test_book) == collector.books_genre[test_book] == ''
+        assert collector.get_book_genre("Несуществующая книга") is None
 
     def test_get_books_genre_returns_all_books(self, genre_collector):
         books_genre = genre_collector.get_books_genre()
