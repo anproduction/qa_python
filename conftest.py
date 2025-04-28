@@ -7,12 +7,15 @@ def collector():
     return BooksCollector()
 
 @pytest.fixture
-def genre_collector(collector):
-    def _add_books(custom_books=None):
-        books_to_add = custom_books or books_genres
-        for book, genre in books_to_add.items():
+def genre_collector():
+    def _create_collector(custom_books=None):
+        collector = BooksCollector()
+        books = custom_books or books_genres
+
+        for book, genre in books.items():
             collector.add_new_book(book)
             if genre:
                 collector.set_book_genre(book, genre)
         return collector
-    return _add_books
+
+    return _create_collector
